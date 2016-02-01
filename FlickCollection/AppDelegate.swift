@@ -13,9 +13,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
+    //This is the method that add the Bar and first launches when you open you app
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        //Screen of the iOS devise
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        //Create a variable to manipulate the storyboard
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        
+        //Create the specify TabBar with their expesification
+        let nowPlayingNavigationController = storyBoard.instantiateViewControllerWithIdentifier("MovieNavigationController") as! UINavigationController
+        let nowPlayingViewController = nowPlayingNavigationController.topViewController as! MovieViewController
+        nowPlayingViewController.apiSection = "now_playing"
+        nowPlayingNavigationController.tabBarItem.title = "Now Playing"
+        nowPlayingNavigationController.tabBarItem.image = UIImage(named: "nowplaying")
+        
+        let topRatedNavigationController = storyBoard.instantiateViewControllerWithIdentifier("MovieNavigationController") as! UINavigationController
+        let topRatedViewController = topRatedNavigationController.topViewController as! MovieViewController
+        topRatedViewController.apiSection = "top_rated"
+        topRatedNavigationController.tabBarItem.title = "Top Rated"
+        topRatedNavigationController.tabBarItem.image = UIImage(named: "toprated")
+        
+        let popularNavigationController = storyBoard.instantiateViewControllerWithIdentifier("MovieNavigationController") as! UINavigationController
+        let popularViewController = popularNavigationController.topViewController as! MovieViewController
+        popularViewController.apiSection = "popular"
+        popularNavigationController.tabBarItem.title = "Popular"
+        popularNavigationController.tabBarItem.image = UIImage(named: "popular")
+        
+        let upcomingNavigationController = storyBoard.instantiateViewControllerWithIdentifier("MovieNavigationController") as! UINavigationController
+        let upcomingViewController = upcomingNavigationController.topViewController as! MovieViewController
+        upcomingViewController.apiSection = "upcoming"
+        upcomingNavigationController.tabBarItem.title = "Upcoming"
+        upcomingNavigationController.tabBarItem.image = UIImage(named: "upcoming")
+        
+        //Create the General Tab Bar, and unites every specify tabbar
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [nowPlayingNavigationController, topRatedNavigationController, popularNavigationController, upcomingNavigationController]
+        
+        //Insert the TabBar to the window
+        window!.rootViewController = tabBarController
+        window!.makeKeyAndVisible()
+        
         return true
     }
 
